@@ -35,4 +35,5 @@ public class TableTuple extends Tuple {
         return tuple.equals(aTuple);
     }
 
+
 }

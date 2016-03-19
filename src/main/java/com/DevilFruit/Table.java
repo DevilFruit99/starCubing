@@ -1,5 +1,7 @@
 package com.DevilFruit;
 
+import fileParser.CsVParser;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -10,10 +12,9 @@ public class Table {
     List<TableTuple> table;
     Tuple key;//has one extra column count
 
-    public Table(Tuple key) {
-        this.key = key;
-        this.key.add("Count");
+    public Table() {
         table = new ArrayList<TableTuple>();
+        key = new Tuple();
     }
 
     public void add(Tuple tup) {
@@ -28,8 +29,19 @@ public class Table {
 
     }
 
-    public int count(Tuple tup) {
+    public int getCount(Tuple tup) {
         return table.get(table.indexOf(tup)).getCount();
+    }
+
+    public void populate(CsVParser parser) {
+        key.add(parser.next());
+        while (parser.hasNext()) {
+            TableTuple newRow = new TableTuple(parser.next());
+            table.add(newRow);
+            newRow.increment();//make count to 1
+
+        }
+
     }
 }
 
